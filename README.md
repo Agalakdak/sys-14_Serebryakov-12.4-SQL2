@@ -25,24 +25,24 @@
 
 Получите количество фильмов, продолжительность которых больше средней продолжительности всех фильмов.
 
-SELECT COUNT(1)
-AS 'Количество фильмов 
-с продолжительностью 
-выше среднего'
-FROM film
-WHERE film.length > ( SELECT AVG(film.length) from film)
+> SELECT COUNT(1)
+> AS 'Количество фильмов 
+> с продолжительностью 
+> выше среднего'
+> FROM film
+> WHERE film.length > ( SELECT AVG(film.length) from film)
 
 
 ### Задание 3
 
 Получите информацию, за какой месяц была получена наибольшая сумма платежей, и добавьте информацию по количеству аренд за этот месяц.
 
-select DATE_FORMAT(payment_date, '%Y-%M') as 'Месяц',
-SUM(amount) as 'Сумма', 
-COUNT(payment.rental_id) as 'Количество аренд' 
-from payment 
-group by payment_date 
-order by SUM(amount) DESC limit 1
+> select DATE_FORMAT(payment_date, '%Y-%M') as 'Месяц',
+> SUM(amount) as 'Сумма', 
+> COUNT(payment.rental_id) as 'Количество аренд' 
+> from payment 
+> group by payment_date 
+> order by SUM(amount) DESC limit 1
 
 
 ## Дополнительные задания (со звёздочкой*)
@@ -58,11 +58,11 @@ order by SUM(amount) DESC limit 1
 
 На самом деле ответ я чуть-чуть подсмотрел в лекции =) 
 
-select *
-from film
-LEFT JOIN inventory ON film.film_id = inventory.film_id
-LEFT JOIN rental ON rental.inventory_id = inventory.inventory_id
-WHERE rental.rental_id IS NULL
+> select *
+> from film
+> LEFT JOIN inventory ON film.film_id = inventory.film_id
+> LEFT JOIN rental ON rental.inventory_id = inventory.inventory_id
+> WHERE rental.rental_id IS NULL
 
 
 
