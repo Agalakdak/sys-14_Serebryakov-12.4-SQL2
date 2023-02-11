@@ -11,19 +11,18 @@
 
 Почему не сработал запрос ниже ?
 
-Select CONCAT(staff.last_name , ' ', staff.first_name) as 'Фамилия и имя 
-сотрудника', 
-city.city, 
--- COUNT(customer.customer_id)
+Select CONCAT(s.last_name , ' ', s.first_name) as 'Фамилия и имя сотрудника', 
+c.city,
+COUNT(st.store_id)
+from staff s 
 
-from staff
-inner join store on store.store_id = staff.store_id
-inner join address on address.address_id = store.address_id
-inner join city on city.city_id = address.city_id
--- join ниже нужен для связи покупателя и магазина оп id
-inner join customer on customer.store_id = store.store_id
-GROUP BY store.store_id
-HAVING COUNT(customer.customer_id) > 300
+inner join store st on st.store_id = s.store_id 
+inner join address addr on addr.address_id = st.address_id 
+inner join city c on c.city_id = addr.city_id 
+
+inner join customer cu on cu.store_id = st.store_id 
+GROUP BY CONCAT(s.last_name , ' ', s.first_name), c.city
+HAVING COUNT(cu.customer_id) > 300
 
 
 ### Задание 2
