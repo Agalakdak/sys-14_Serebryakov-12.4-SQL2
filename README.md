@@ -8,16 +8,22 @@
 - количество пользователей, закреплённых в этом магазине.
 
 
-> Select CONCAT(s.last_name , ' ', s.first_name) as 'Фамилия и имя сотрудника', 
-> c.city,
-> COUNT(st.store_id)
-> from staff s 
-> inner join store st on st.store_id = s.store_id 
-> inner join address addr on addr.address_id = st.address_id 
-> inner join city c on c.city_id = addr.city_id 
-> inner join customer cu on cu.store_id = st.store_id 
-> GROUP BY CONCAT(s.last_name , ' ', s.first_name), c.city
-> HAVING COUNT(cu.customer_id) > 300
+select  
+CONCAT(s.first_name, ' ', s.last_name) as 'Фамилия и имя 
+сотрудника',
+addr.address as 'Адрес',
+count(st.store_id) as 'количество людей закрепленных в этом магазине'
+
+FROM customer cu
+
+-- далее связываем таблицы и выводим доп. информацию 
+
+INNER JOIN store st on cu.store_id = st.store_id 
+INNER JOIN staff s on s.store_id= st.store_id
+INNER JOIN address addr on addr.address_id = st.address_id
+
+group by cu.store_id, CONCAT(s.first_name, ' ', s.last_name) 
+HAVING count(1) > 300
 
 
 ### Задание 2
@@ -37,13 +43,13 @@
 
 Получите информацию, за какой месяц была получена наибольшая сумма платежей, и добавьте информацию по количеству аренд за этот месяц.
 
-> select DATE_FORMAT(payment_date, '%Y-%M') as 'Месяц',
-> SUM(amount) as 'Сумма', 
-> COUNT(payment.rental_id) as 'Количество аренд' 
-> from payment 
-> group by payment_date 
-> order by SUM(amount) DESC limit 1
-
+select DATE_FORMAT(p.payment_date, '%Y-%M') as 'Месяц', 
+SUM(amount) as 'Сумма', 
+COUNT(p.rental_id) as 'Количество аренд' 
+from payment p
+INNER JOIN rental r ON p.rental_id = r.rental_id 
+group by DATE_FORMAT(p.payment_date, '%Y-%M')
+order by SUM(amount) DESC limit 1
 
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
