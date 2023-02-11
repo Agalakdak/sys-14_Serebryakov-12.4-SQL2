@@ -7,22 +7,17 @@
 - город нахождения магазина;
 - количество пользователей, закреплённых в этом магазине.
 
-Сожалею, но это задание взорвало мне мозг >_<
 
-Почему не сработал запрос ниже ?
-
-Select CONCAT(s.last_name , ' ', s.first_name) as 'Фамилия и имя сотрудника', 
-c.city,
-COUNT(st.store_id)
-from staff s 
-
-inner join store st on st.store_id = s.store_id 
-inner join address addr on addr.address_id = st.address_id 
-inner join city c on c.city_id = addr.city_id 
-
-inner join customer cu on cu.store_id = st.store_id 
-GROUP BY CONCAT(s.last_name , ' ', s.first_name), c.city
-HAVING COUNT(cu.customer_id) > 300
+> Select CONCAT(s.last_name , ' ', s.first_name) as 'Фамилия и имя сотрудника', 
+> c.city,
+> COUNT(st.store_id)
+> from staff s 
+> inner join store st on st.store_id = s.store_id 
+> inner join address addr on addr.address_id = st.address_id 
+> inner join city c on c.city_id = addr.city_id 
+> inner join customer cu on cu.store_id = st.store_id 
+> GROUP BY CONCAT(s.last_name , ' ', s.first_name), c.city
+> HAVING COUNT(cu.customer_id) > 300
 
 
 ### Задание 2
